@@ -7,6 +7,7 @@
     <string name="location_updates_label">Location Updates</string>
 
     <string name="button_login_twitter">Twitter Login</string>
+    <string name="button_move_map">Google Map</string>
 
     <string name="permission_rationale">Location permission is needed for core functionality</string>
     <string name="permission_denied_explanation">Permission was denied, but is needed for core
