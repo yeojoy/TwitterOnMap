@@ -17,4 +17,8 @@
     <string name="remove_location_updates">Remove location updates</string>
 
     <string name="location_updated">Location Updated: %1$s</string>
+
+    <string name="hint_small_info_tweet_title">Good morning everyone!</string>
+    <string name="hint_small_info_tweet_screen_name">yeojoy</string>
+    <string name="hint_small_info_tweet_timestamp">Sun Oct 20 04:03:04 +0000 2019</string>
 </resources>
