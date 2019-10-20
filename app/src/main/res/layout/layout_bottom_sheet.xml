@@ -8,15 +8,19 @@
     android:background="@android:color/white"
     app:behavior_hideable="true"
     app:behavior_peekHeight="56dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:showIn="@layout/activity_maps">
 
     <TextView
         android:id="@+id/textViewTweet"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="8dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
+        android:hint="@string/hint_small_info_tweet_title"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:singleLine="true"
@@ -25,27 +29,26 @@
         app:layout_constraintBottom_toTopOf="@id/textViewScreenName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:hint="@string/hint_small_info_tweet_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
+        android:hint="@string/hint_small_info_tweet_screen_name"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:singleLine="true"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/textViewTimestamp"
-        app:layout_constraintTop_toBottomOf="@id/textViewTweet"
-        tools:hint="@string/hint_small_info_tweet_screen_name" />
+        app:layout_constraintTop_toBottomOf="@id/textViewTweet" />
 
 
     <TextView
@@ -55,6 +58,7 @@
         android:layout_marginLeft="8dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
+        android:hint="@string/hint_small_info_tweet_timestamp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:singleLine="true"
@@ -62,8 +66,7 @@
         app:layout_constraintBottom_toBottomOf="@id/textViewScreenName"
         app:layout_constraintLeft_toRightOf="@id/textViewScreenName"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewScreenName"
-        tools:hint="@string/hint_small_info_tweet_timestamp" />
+        app:layout_constraintTop_toTopOf="@id/textViewScreenName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
