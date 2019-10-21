@@ -214,7 +214,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (grantResults.isEmpty()) {
                 // If user interaction was interrupted, the permission request is cancelled and you
                 // receive empty arrays.
-                Log.i(TAG, "User interaction was cancelled.")
+                Log.i(TAG, "TwitterUser interaction was cancelled.")
             } else {
                 // Permission denied.
                 Snackbar.make(findViewById(R.id.layoutMap),
