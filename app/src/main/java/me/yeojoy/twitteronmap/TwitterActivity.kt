@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_twitter.*
 import me.yeojoy.twitteronmap.controller.TwitterActivityController
 import me.yeojoy.twitteronmap.network.model.Tweets
@@ -26,10 +27,8 @@ class TwitterActivity : AppCompatActivity(), TwitterActivityController.TwitterLo
         }
 
         buttonDisplayGoogleMap.setOnClickListener {
-//            val intent = Intent(this@TwitterActivity, MapsActivity::class.java)
-//            startActivity(intent)
-//            finish()
-            controller.requestTweets(this)
+            val latLng = LatLng()
+            controller.requestTweets(this, "ndg", latLng, 5)
         }
     }
 
@@ -53,6 +52,8 @@ class TwitterActivity : AppCompatActivity(), TwitterActivityController.TwitterLo
 
     override fun onGetTweets(tweets: Tweets) {
         Log.i(TAG, "onGetTweets()")
-
+        for (tweet in tweets.tweets) {
+            Log.d(TAG, "tweet >>> : ${tweet}")
+        }
     }
 }
