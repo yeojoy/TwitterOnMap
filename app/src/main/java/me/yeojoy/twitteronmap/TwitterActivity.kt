@@ -27,7 +27,8 @@ class TwitterActivity : AppCompatActivity(), TwitterActivityController.TwitterLo
         }
 
         buttonDisplayGoogleMap.setOnClickListener {
-            val latLng = LatLng()
+            // // 45.5039267,-73.5881409
+            val latLng = LatLng(45.5039267, -73.5881409)
             controller.requestTweets(this, "ndg", latLng, 5)
         }
     }

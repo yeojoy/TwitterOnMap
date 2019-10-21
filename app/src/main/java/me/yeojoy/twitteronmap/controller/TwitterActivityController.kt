@@ -39,10 +39,12 @@ class TwitterActivityController() {
                     twitterLoginView.onSuccessTwitterLogin(twitterAccessToken)
 
                 }, Response.ErrorListener {
-                    val statusCode = it.networkResponse.statusCode
-                    val message = String(it.networkResponse.data, Charsets.UTF_8)
-                    Log.e(TAG, "error occurs. status code >>> $statusCode\n message >>> $message")
-                    twitterLoginView.onFailTwitterLogin(statusCode, message)
+                    it.networkResponse?.let {
+                        val statusCode = it.statusCode
+                        val message = String(it.data, Charsets.UTF_8)
+                        Log.e(TAG, "error occurs. status code >>> $statusCode\n message >>> $message")
+                        twitterLoginView.onFailTwitterLogin(statusCode, message)
+                    }
                 }) {
                     override fun getBodyContentType(): String {
                         return "application/x-www-form-urlencoded;chaset=UTF-8"
