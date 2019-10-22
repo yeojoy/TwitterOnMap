@@ -14,14 +14,14 @@ import me.yeojoy.twitteronmap.network.ApiManager
 import me.yeojoy.twitteronmap.network.model.Tweets
 import me.yeojoy.twitteronmap.network.model.TwitterAccessToken
 
-class TwitterActivityController() {
+class TwitterActivityController {
 
     private val TAG = "TwitterAcController"
 
     fun loginTwitter(twitterLoginView: TwitterLoginView) {
-        val activity = twitterLoginView.getContext()
+        val context = twitterLoginView.getContext()
         val sourceText =
-                "${activity.getString(R.string.twitter_consumer_key)}:${activity.getString(R.string.twitterPconsumer_secret)}"
+                "${context.getString(R.string.twitter_consumer_key)}:${context.getString(R.string.twitterPconsumer_secret)}"
 
         val basicValue = "Basic ${Base64.encodeToString(sourceText.toByteArray(Charsets.UTF_8),
                 Base64.NO_WRAP)}"
@@ -82,7 +82,10 @@ class TwitterActivityController() {
 
         val authorizationString = "$tokenType $accessToken"
 
-        val url = "https://api.twitter.com/1.1/search/tweets.json?q=$query&count=100&locale=ca&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
+        val url = """
+            https://api.twitter.com/1.1/search/tweets.json?q=$query
+            &count=100&locale=ca&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
+        """.trimIndent()
         var apiManager = ApiManager.getInstance(twitterRequestTweetsView.getContext())
 
         val tweetsRequest =
