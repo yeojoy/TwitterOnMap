@@ -57,6 +57,7 @@ It displays maximum 100 tweets.
 6. Add two functions, RETWEET and LIKE.
 7. Add search function and an activity to display results
 8. Display photos and play videos
+9. translate default string resources to French
 
 ## Problems
 Most of tweets have no geo information. Maybe there are 1 or 3 in 100 tweets.
