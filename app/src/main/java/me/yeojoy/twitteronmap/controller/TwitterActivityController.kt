@@ -82,10 +82,8 @@ class TwitterActivityController {
 
         val authorizationString = "$tokenType $accessToken"
 
-        val url = """
-            https://api.twitter.com/1.1/search/tweets.json?q=$query
-            &count=100&locale=ca&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
-        """.trimIndent()
+        val url = "https://api.twitter.com/1.1/search/tweets.json?q=$query&count=100&locale=ca&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
+
         var apiManager = ApiManager.getInstance(twitterRequestTweetsView.getContext())
 
         val tweetsRequest =
@@ -114,11 +112,17 @@ class TwitterActivityController {
         apiManager.addToRequestQueue(tweetsRequest)
     }
 
+    /**
+     * This interface is to access an Activity to display login status.
+     */
     interface TwitterLoginView : AppView {
         fun onSuccessTwitterLogin(twitterAccessToken: TwitterAccessToken)
         fun onFailTwitterLogin(statusCode: Int, message: String)
     }
 
+    /**
+     * This interface is to access an Activity to display tweets.
+     */
     interface TwitterRequestTweetsView : AppView {
         fun onGetTweets(tweets: Tweets)
     }

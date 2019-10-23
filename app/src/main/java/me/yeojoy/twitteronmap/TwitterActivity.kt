@@ -1,6 +1,7 @@
 package me.yeojoy.twitteronmap
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -27,10 +28,16 @@ class TwitterActivity : AppCompatActivity(), TwitterActivityController.TwitterLo
             controller.loginTwitter(this)
         }
 
-        buttonDisplayGoogleMap.setOnClickListener {
+        buttonTwitterTweets.setOnClickListener {
             // // 45.5039267,-73.5881409
             val latLng = LatLng(45.5039267, -73.5881409)
             controller.requestTweets(this, "", latLng, 5)
+        }
+
+        buttonDisplayGoogleMap.setOnClickListener {
+            val intent = Intent(this@TwitterActivity, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -57,9 +64,10 @@ class TwitterActivity : AppCompatActivity(), TwitterActivityController.TwitterLo
 
         val gson = Gson()
         for ((index, t) in tweets.tweets.withIndex()) {
-            t.geo?.let {
-                Log.d(TAG, "index $index >>> ${gson.toJson(t)}")
-            }
+
+            textViewStatus.append("${t.user.screenName} said that \"${t.text}\"\nDate -> ${t.createAt}\n\n")
+            Log.d(TAG, "index $index >>> ${gson.toJson(t)}")
+
         }
     }
 }
