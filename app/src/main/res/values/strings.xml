@@ -23,4 +23,7 @@
     <string name="hint_small_info_tweet_title">Good morning everyone!</string>
     <string name="hint_small_info_tweet_screen_name">yeojoy</string>
     <string name="hint_small_info_tweet_timestamp">Sun Oct 20 04:03:04 +0000 2019</string>
+
+    <string name="toast_fail_to_login_at_twitter">If you don\'t login, Can not use this App.</string>
+    <string name="toast_success_to_login_at_twitter">Success to login</string>
 </resources>

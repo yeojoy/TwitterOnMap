@@ -2,72 +2,67 @@ package me.yeojoy.twitteronmap
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.model.LatLng
-import com.google.gson.Gson
+import android.widget.Toast
+import androidx.core.text.TextUtilsCompat
 import kotlinx.android.synthetic.main.activity_twitter.*
-import me.yeojoy.twitteronmap.controller.TwitterActivityController
-import me.yeojoy.twitteronmap.network.model.Tweets
+import me.yeojoy.twitteronmap.app.BaseActivity
+import me.yeojoy.twitteronmap.app.Constants
+import me.yeojoy.twitteronmap.controller.TwitterLoginController
 import me.yeojoy.twitteronmap.network.model.TwitterAccessToken
 
-class TwitterActivity : AppCompatActivity(), TwitterActivityController.TwitterLoginView,
-    TwitterActivityController.TwitterRequestTweetsView {
+class TwitterActivity : BaseActivity(), TwitterLoginController.TwitterLoginView {
     private val TAG = "TwitterActivity"
 
-    private lateinit var controller: TwitterActivityController
+    private lateinit var twitterLoginController: TwitterLoginController
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_twitter)
 
-        controller = TwitterActivityController()
+        twitterLoginController = TwitterLoginController()
 
+        sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
         buttonTwitterLogin.setOnClickListener {
-            controller.loginTwitter(this)
+            twitterLoginController.loginTwitter(this)
         }
 
-        buttonTwitterTweets.setOnClickListener {
-            // // 45.5039267,-73.5881409
-            val latLng = LatLng(45.5039267, -73.5881409)
-            controller.requestTweets(this, "", latLng, 5)
-        }
+        val tokenType = sharedPreferences.getString(Constants.SHARED_KEY_TOKEN_TYPE, "")
+        val accessToken = sharedPreferences.getString(Constants.SHARED_KEY_ACCESS_TOKEN, "")
 
-        buttonDisplayGoogleMap.setOnClickListener {
-            val intent = Intent(this@TwitterActivity, MapsActivity::class.java)
-            startActivity(intent)
-            finish()
+        // If user already loged in, go directly.
+        if (!TextUtils.isEmpty(tokenType) && !TextUtils.isEmpty(accessToken)) {
+            moveMapActivity()
         }
     }
 
     override fun onSuccessTwitterLogin(accessToken: TwitterAccessToken) {
         Log.i(TAG, "onSuccessTwitterLogin()")
         textViewStatus.append("tokenType : ${accessToken.tokenType}, accessToken : ${accessToken.accessToken}\n")
-        val sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
         val editor = sharedPreferences.edit()
         editor.putString(Constants.SHARED_KEY_TOKEN_TYPE, accessToken.tokenType)
         editor.putString(Constants.SHARED_KEY_ACCESS_TOKEN, accessToken.accessToken)
         editor.apply()
+
+        Toast.makeText(this, R.string.toast_success_to_login_at_twitter, Toast.LENGTH_SHORT).show()
+
+        moveMapActivity()
     }
 
     override fun onFailTwitterLogin(statusCode: Int, message: String) {
         Log.i(TAG, "onFailTwitterLogin(), statusCode : $statusCode, message : $message")
+        Toast.makeText(this, R.string.toast_fail_to_login_at_twitter, Toast.LENGTH_SHORT).show()
     }
 
-    override fun getContext(): Context {
-        return this
-    }
-
-    override fun onGetTweets(tweets: Tweets) {
-        Log.i(TAG, "onGetTweets()")
-
-        val gson = Gson()
-        for ((index, t) in tweets.tweets.withIndex()) {
-
-            textViewStatus.append("${t.user.screenName} said that \"${t.text}\"\nDate -> ${t.createAt}\n\n")
-            Log.d(TAG, "index $index >>> ${gson.toJson(t)}")
-
-        }
+    private fun moveMapActivity() {
+        val intent = Intent(this@TwitterActivity, MapsActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

@@ -1,4 +1,4 @@
-package me.yeojoy.twitteronmap
+package me.yeojoy.twitteronmap.app
 
 object Constants {
     const val SHARED_PREFERENCES_NAME = "twitter_on_map"
