@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet.*
 import me.yeojoy.twitteronmap.app.BaseActivity
 import me.yeojoy.twitteronmap.controller.TwitterTweetController
+import me.yeojoy.twitteronmap.network.model.Tweet
 import me.yeojoy.twitteronmap.network.model.Tweets
 
 
@@ -36,7 +38,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
 
     private val TAG = "MapsActivity"
     private val REQUEST_LOCATION_PERMISSON_CODE = 991
-    private val REFRESH_TIMER = 2 * 1000L
+    private val REFRESH_TIMER = 1 * 1000L
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -46,9 +48,11 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
 
     private lateinit var twitterTweetController: TwitterTweetController
 
+    private var tweetsFromResult: MutableList<Tweet> = arrayListOf()
+
     private var lastLatLng: LatLng? = null
 
-    private var currentRadius: Int = 5
+    private var currentRadius: Int = 3
 
     private val runnable = Runnable {
         mMap?.let {
@@ -57,9 +61,9 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
                 mMap.cameraPosition.target.latitude,
                 mMap.cameraPosition.target.longitude
             )
-            addMarker(latLng)
 
-            // TODO refresh tweets
+            addMapCenterMarker(latLng)
+            requestTweets(latLng, currentRadius)
         }
     }
 
@@ -175,12 +179,6 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
         mMap = googleMap
 
         mMap.setOnCameraMoveListener {
-            val latLng = mMap.cameraPosition.target
-            Log.d(
-                TAG,
-                "setOnCameraMoveListener : Latitude ${latLng.latitude}, Longitude ${latLng.longitude}"
-            )
-
             sendLocation()
         }
 
@@ -206,10 +204,39 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-    private fun addMarker(latLng: LatLng) {
+    private fun addMapCenterMarker(latLng: LatLng) {
         mMap?.let {
             mMap.clear()
             mMap.addMarker(MarkerOptions().position(latLng).title("your location"))
+            mMap.setOnMarkerClickListener {
+                sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                true
+            }
+        }
+    }
+
+    private fun addTweetsMarker() {
+        Log.i(TAG, "addTweetsMarker()")
+        if (tweetsFromResult.size < 1) {
+            Log.e(TAG, "There is no tweet.")
+            return
+        }
+
+        mMap?.let {
+            mMap.clear()
+
+            var latLngBoundsBuiler = LatLngBounds.builder()
+            for (tweet in tweetsFromResult) {
+                val latLng = LatLng(tweet.geo.coordinates.get(0), tweet.geo.coordinates.get(1))
+                mMap.addMarker(MarkerOptions().position(latLng).title(tweet.user.screenName))
+                latLngBoundsBuiler.include(latLng)
+            }
+
+            val padding = resources.getDimensionPixelSize(R.dimen.map_bounds_padding)
+            Log.e(TAG, "map bounds padding >>> $padding")
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBoundsBuiler.build(), padding))
+
             mMap.setOnMarkerClickListener {
                 sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
@@ -305,8 +332,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
             lastLatLng = latLng
             val cameraUpdateFactory = CameraUpdateFactory.newLatLngZoom(latLng, 15f)
             mMap.animateCamera(cameraUpdateFactory)
-            addMarker(latLng)
-            requestTweets(latLng, currentRadius)
+            addMapCenterMarker(latLng)
         }
     }
 
@@ -326,17 +352,22 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
 
     override fun onGetTweets(tweets: Tweets) {
         Log.i(TAG, "onGetTweets()")
-        var count = 0
         val gson = Gson()
+        tweetsFromResult.clear()
+
         for ((index, t) in tweets.tweets.withIndex()) {
 
             t.geo?.let {
                 Log.d(TAG, "index $index >>> ${gson.toJson(t)}")
+                tweetsFromResult.add(t)
 
-                count++
             }
         }
 
-        Log.d(TAG, "count that tweet has geo information >>> $count")
+        if (tweetsFromResult.size > 0) {
+            addTweetsMarker()
+
+            Log.d(TAG, "count that tweet has geo information >>> ${tweetsFromResult.size}")
+        }
     }
 }
