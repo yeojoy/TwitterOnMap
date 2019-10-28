@@ -32,7 +32,7 @@ class TwitterTweetController {
         val authorizationString = "$tokenType $accessToken"
 
         val url =
-            "https://api.twitter.com/1.1/search/tweets.json?q=$query&count=100&locale=ca&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
+            "https://api.twitter.com/1.1/search/tweets.json?q=$query&count=100&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
 
         var apiManager = ApiManager.getInstance(twitterRequestTweetsView.getContext())
 
