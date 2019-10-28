@@ -326,14 +326,17 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
 
     override fun onGetTweets(tweets: Tweets) {
         Log.i(TAG, "onGetTweets()")
-
+        var count = 0
         val gson = Gson()
         for ((index, t) in tweets.tweets.withIndex()) {
 
             t.geo?.let {
                 Log.d(TAG, "index $index >>> ${gson.toJson(t)}")
-                
+
+                count++
             }
         }
+
+        Log.d(TAG, "count that tweet has geo information >>> $count")
     }
 }

@@ -19,22 +19,21 @@ class TwitterTweetController {
         twitterRequestTweetsView: TwitterRequestTweetsView,
         query: String, latLng: LatLng, radius: Int
     ) {
+        Log.i(TAG, "requestTweets()")
         val sharedPreferences = twitterRequestTweetsView.getContext()
             .getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val tokenType = sharedPreferences.getString(Constants.SHARED_KEY_TOKEN_TYPE, "")
-        val accessToken = sharedPreferences.getString(Constants.SHARED_KEY_ACCESS_TOKEN, "")
 
-        if (TextUtils.isEmpty(tokenType) || TextUtils.isEmpty(accessToken)) {
+        val authorizationString = sharedPreferences.getString(Constants.SHARED_KEY_TWITTER_AUTH, "")
 
+        if (TextUtils.isEmpty(authorizationString)) {
+            Log.e(TAG, "There is no authrizationString.")
             return
         }
-
-        val authorizationString = "$tokenType $accessToken"
 
         val url =
             "https://api.twitter.com/1.1/search/tweets.json?q=$query&count=100&geocode=${latLng.latitude},${latLng.longitude},${radius}km"
 
-        var apiManager = ApiManager.getInstance(twitterRequestTweetsView.getContext())
+        val apiManager = ApiManager.getInstance(twitterRequestTweetsView.getContext())
 
         val tweetsRequest =
             object : StringRequest(Method.GET, url, Response.Listener<String> { response ->
@@ -52,7 +51,7 @@ class TwitterTweetController {
 
                 override fun getHeaders(): MutableMap<String, String> {
                     var headers = mutableMapOf<String, String>()
-                    headers.put("Authorization", authorizationString)
+                    headers.put("Authorization", authorizationString!!)
                     return headers
                 }
             }

@@ -2,6 +2,5 @@ package me.yeojoy.twitteronmap.app
 
 object Constants {
     const val SHARED_PREFERENCES_NAME = "twitter_on_map"
-    const val SHARED_KEY_TOKEN_TYPE = "token_type"
-    const val SHARED_KEY_ACCESS_TOKEN = "access_token"
+    const val SHARED_KEY_TWITTER_AUTH = "twitter_api_auth"
 }

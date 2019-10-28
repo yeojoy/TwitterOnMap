@@ -32,22 +32,22 @@ class TwitterActivity : BaseActivity(), TwitterLoginController.TwitterLoginView 
             twitterLoginController.loginTwitter(this)
         }
 
-        val tokenType = sharedPreferences.getString(Constants.SHARED_KEY_TOKEN_TYPE, "")
-        val accessToken = sharedPreferences.getString(Constants.SHARED_KEY_ACCESS_TOKEN, "")
+        val authorizationString = sharedPreferences.getString(Constants.SHARED_KEY_TWITTER_AUTH, "")
 
         // If user already loged in, go directly.
-        if (!TextUtils.isEmpty(tokenType) && !TextUtils.isEmpty(accessToken)) {
+        if (!TextUtils.isEmpty(authorizationString)) {
             moveMapActivity()
         }
     }
 
     override fun onSuccessTwitterLogin(accessToken: TwitterAccessToken) {
         Log.i(TAG, "onSuccessTwitterLogin()")
-        textViewStatus.append("tokenType : ${accessToken.tokenType}, accessToken : ${accessToken.accessToken}\n")
 
         val editor = sharedPreferences.edit()
-        editor.putString(Constants.SHARED_KEY_TOKEN_TYPE, accessToken.tokenType)
-        editor.putString(Constants.SHARED_KEY_ACCESS_TOKEN, accessToken.accessToken)
+        val authorizationString = "${accessToken.tokenType} ${accessToken.accessToken}"
+        textViewStatus.append("authorizationString : $authorizationString")
+
+        editor.putString(Constants.SHARED_KEY_TWITTER_AUTH, authorizationString)
         editor.apply()
 
         Toast.makeText(this, R.string.toast_success_to_login_at_twitter, Toast.LENGTH_SHORT).show()
