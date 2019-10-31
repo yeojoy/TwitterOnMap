@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewTweet"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:hint="@string/hint_small_info_tweet_title"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textViewScreenName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/textViewScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:hint="@string/hint_small_info_tweet_screen_name"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textViewTimestamp"
+        app:layout_constraintStart_toStartOf="@id/textViewTweet"
+        app:layout_constraintTop_toBottomOf="@id/textViewTweet" />
+
+
+    <TextView
+        android:id="@+id/textViewTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:hint="@string/hint_small_info_tweet_timestamp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:singleLine="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/textViewScreenName"
+        app:layout_constraintStart_toEndOf="@id/textViewScreenName"
+        app:layout_constraintTop_toTopOf="@id/textViewScreenName" />
+</androidx.constraintlayout.widget.ConstraintLayout>

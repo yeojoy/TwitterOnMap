@@ -232,10 +232,15 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback,
                 latLngBoundsBuiler.include(latLng)
             }
 
-            val padding = resources.getDimensionPixelSize(R.dimen.map_bounds_padding)
+            val padding = resources.getDimensionPixelSize(R.dimen.padding_map_bounds)
             Log.e(TAG, "map bounds padding >>> $padding")
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBoundsBuiler.build(), padding))
+            mMap.moveCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    latLngBoundsBuiler.build(),
+                    padding
+                )
+            )
 
             mMap.setOnMarkerClickListener {
                 sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
