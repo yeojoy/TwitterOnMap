@@ -1,7 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageViewProfile"
+            android:layout_width="@dimen/size_profile_photo_in_detail"
+            android:layout_height="@dimen/size_profile_photo_in_detail"
+            android:layout_marginStart="@dimen/margin_horizontal_in_detail"
+            android:layout_marginTop="@dimen/margin_profile_photo_in_detail"
+            android:contentDescription="@string/content_desc_profile_in_detail"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toStartOf="@id/textViewScreenName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textViewScreenName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/margin_horizontal_in_detail"
+            android:gravity="start|top"
+            android:singleLine="true"
+            android:textSize="@dimen/font_size_screen_name_in_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageViewProfile"
+            app:layout_constraintTop_toTopOf="@id/imageViewProfile"
+            tools:text="yeojoy" />
+
+        <TextView
+            android:id="@+id/textViewTimestamp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/font_size_timestamp_in_detail"
+            app:layout_constraintEnd_toEndOf="@id/textViewScreenName"
+            app:layout_constraintStart_toStartOf="@id/textViewScreenName"
+            app:layout_constraintTop_toBottomOf="@id/textViewScreenName"
+            tools:text="Nov 7th 2019 Thursday 9:32 AM" />
+
+        <TextView
+            android:id="@+id/textViewContents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal_in_detail"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/margin_horizontal_in_detail"
+            android:gravity="start|center_vertical"
+            android:singleLine="true"
+            android:textSize="@dimen/font_size_contents_in_detail"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewProfile"
+            app:layout_goneMarginBottom="@dimen/margin_vertical_in_detail"
+            tools:text="hello. How are you?" />
+
+        <ImageView
+            android:id="@+id/imageViewContents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal_in_detail"
+            android:layout_marginTop="@dimen/margin_vertical_in_detail"
+            android:layout_marginEnd="@dimen/margin_horizontal_in_detail"
+            android:layout_marginBottom="@dimen/margin_vertical_in_detail"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/content_desc_contents_in_detail"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewContents"
+            tools:src="@mipmap/ic_launcher"
+            tools:visibility="visible" />
+
+        <VideoView
+            android:id="@+id/videoViewContents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal_in_detail"
+            android:layout_marginTop="@dimen/margin_vertical_in_detail"
+            android:layout_marginEnd="@dimen/margin_horizontal_in_detail"
+            android:layout_marginBottom="@dimen/margin_vertical_in_detail"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewContents" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -2,4 +2,16 @@
 <resources>
     <dimen name="padding_map_bounds">32dp</dimen>
     <dimen name="height_bottom_sheet">72dp</dimen>
+
+    <dimen name="size_profile_photo_in_detail">64dp</dimen>
+    <dimen name="margin_profile_photo_in_detail">16dp</dimen>
+    <dimen name="margin_horizontal_in_detail">16dp</dimen>
+
+    <dimen name="margin_vertical_in_detail">16dp</dimen>
+
+    <dimen name="font_size_screen_name_in_detail">20sp</dimen>
+    <dimen name="font_size_timestamp_in_detail">14sp</dimen>
+    <dimen name="font_size_contents_in_detail">18sp</dimen>
+
+
 </resources>

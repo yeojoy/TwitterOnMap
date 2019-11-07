@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
+import me.yeojoy.twitteronmap.R
 import me.yeojoy.twitteronmap.network.model.Tweet
 
 class TweetFragment : Fragment() {
@@ -28,8 +29,7 @@ class TweetFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // TODO make layout for this fragment
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_tweet, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,6 +38,7 @@ class TweetFragment : Fragment() {
         val tweet = arguments!!.getParcelable<Tweet>(KEY_TWEET)
         tweet.let {
             Log.d(TAG, Gson().toJson(tweet))
+
 
 
         }

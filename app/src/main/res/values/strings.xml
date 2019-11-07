@@ -26,4 +26,8 @@
 
     <string name="toast_fail_to_login_at_twitter">If you don\'t login, Can not use this App.</string>
     <string name="toast_success_to_login_at_twitter">Success to login</string>
+
+    <!-- imageview's content description : icd -->
+    <string name="content_desc_profile_in_detail">Profile photo</string>
+    <string name="content_desc_contents_in_detail">Contents image in tweet</string>
 </resources>
